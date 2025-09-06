@@ -47,8 +47,6 @@ Stained Liquid Glass (Chromium ONLY*):
 { depth: 7.5, blur: 2, chromaticAberration: 10, transparency: 0.2, color:"#009999", isLiquid: true }
 ```
 
-*: Chromium Only elements will fall back to normal or frosted glass on WebKit and Gecko.
-
 All presets can be used by adding the preset key:
 ```
 { preset: "Liquid Glass"}
@@ -60,3 +58,5 @@ For Stained Variants a color must be provided with the preset, for example:
 ```
 
 Using a preset will NOT override your configuration!
+
+*: Chromium Only elements will fall back to normal or frosted glass on WebKit and Gecko.
