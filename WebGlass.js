@@ -7,8 +7,26 @@ console.log("Starting WebGlass...")
 
 // --- Define WebGlass Main Functions ---
 const WebGlass = {
+    // --- Define preset types of glass ---
+    glassPresets: {
+        "Glass": { blur: 0, transparency: 0.2, isLiquid: false },
+        "Frosted Glass": { blur: 4, transparency: 0.1, isLiquid: false },
+        "Liquid Glass": { depth: 7.5, blur: 2, chromaticAberration: 10, transparency: 0.1, isLiquid: true },
+        "Stained Glass": { blur: 0, transparency: 0.3, isLiquid: false },
+        "Stained Frosted Glass": { blur: 4, transparency: 0.2, isLiquid: false },
+        "Stained Liquid Glass": { depth: 7.5, blur: 2, chromaticAberration: 10, transparency: 0.2, isLiquid: true }
+    },
+
     // --- Makes new glassy "div" ---
-    CreateGlass: function ({ height, width, depth, radius, strength, chromaticAberration, blur = 2, debug = false, color, transparency, isLiquid = true }) {
+    CreateGlass: function ({ height, width, depth, radius, strength, chromaticAberration, blur = 2, debug = false, color, transparency, isLiquid = true, preset }) {
+        if (preset && WebGlass.glassPresets[preset]) {
+            const presetValues = WebGlass.glassPresets[preset];
+            blur = presetValues.blur ?? blur;
+            transparency = presetValues.transparency ?? transparency;
+            isLiquid = presetValues.isLiquid ?? isLiquid;
+            depth = presetValues.depth ?? depth;
+            chromaticAberration = presetValues.chromaticAberration ?? chromaticAberration;
+        }
         this.height = height;
         this.width = width;
         this.baseDepth = depth;
@@ -38,11 +56,20 @@ const WebGlass = {
     },
 
     // --- Makes existing "divs" glassy ---
-    Glassify: function (existingEl, { depth, blur, chromaticAberration, debug = false, color, transparency, isLiquid = true } = {}) {
+    Glassify: function (existingEl, { depth, blur, chromaticAberration, debug = false, color, transparency, isLiquid = true, preset } = {}) {
         // if (!(existingEl instanceof HTMLElement)) {
         //     console.error("Glassify: Provided element is not valid.");
         //     return;
         // }
+        if (preset && WebGlass.glassPresets[preset]) {
+            const presetValues = WebGlass.glassPresets[preset];
+            depth = presetValues.depth ?? depth;
+            blur = presetValues.blur ?? blur;
+            chromaticAberration = presetValues.chromaticAberration ?? chromaticAberration;
+            transparency = presetValues.transparency ?? transparency;
+            isLiquid = presetValues.isLiquid ?? isLiquid;
+        }
+
         if (depth !== undefined) this.baseDepth = depth;
         if (blur !== undefined) this.blur = blur;
         if (chromaticAberration !== undefined) this.chromaticAberration = chromaticAberration;

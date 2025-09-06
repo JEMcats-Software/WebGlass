@@ -59,11 +59,12 @@
 <body>
   <!-- <div class="overlay" id="overlay">
   </div> -->
-
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 30px; z-index: 11;" id="test1"></div>
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 100px; z-index: 10;" id="test2"></div>
-  <img src="images/catfoot.svg" style="position: fixed; width: 200px; height: 200px; border-radius: 100px; z-index: 13;" id="test3">
-
+  <div style="position: fixed; width: 200px; height: 200px; border-radius: 25px; z-index: 10; left: 20px; top: 15px;" id="test1"></div>
+  <div style="position: fixed; width: 200px; height: 200px; border-radius: 50px; z-index: 11; left: 250px; top: 15px;" id="test2"></div>
+  <div style="position: fixed; width: 200px; height: 200px; border-radius: 100px; z-index: 12; left: 480px; top: 15px;" id="test3"></div>
+  <div style="position: fixed; width: 200px; height: 200px; border-radius: 25px; z-index: 13; left: 20px; top: 250px;" id="test4"></div>
+  <div style="position: fixed; width: 200px; height: 200px; border-radius: 50px; z-index: 14; left: 250px; top: 250px;" id="test5"></div>
+  <div style="position: fixed; width: 200px; height: 200px; border-radius: 100px; z-index: 15; left: 480px; top: 250px;" id="test6"></div>
   <img src="images/AS11-40-5865HR.webp" alt="" />
   <img src="images/AS11-40-5872HR.webp" alt="" />
   <img src="images/AS11-40-5877HR.webp" alt="" />
@@ -91,31 +92,69 @@
     rem laborum sequi, temporibus ab dolorum repellat!
   </p>
 
-  <script src="WebGlass.js"></script>
-  <script src="WebDrag.js"></script>
+  <script src="../WebGlass.js"></script>
+  <script src="../WebDrag.js"></script>
   <script>
     // Apply to your element
+    WebGlass.Glassify(document.getElementById('test1'), { preset: "Glass" })
+    WebGlass.Glassify(document.getElementById('test2'), { preset: "Frosted Glass" })
+    WebGlass.Glassify(document.getElementById('test3'), { preset: "Liquid Glass" })
+    WebGlass.Glassify(document.getElementById('test4'), { preset: "Stained Glass", color: "#009999"})
+    WebGlass.Glassify(document.getElementById('test5'), { preset: "Stained Frosted Glass", color: "#ff9900" })
+    WebGlass.Glassify(document.getElementById('test6'), { preset: "Stained Liquid Glass", color: "#33cc33" })
+
+
     makeDraggable(document.getElementById("test1"));
-    WebGlass.Glassify(document.getElementById('test1'), { depth: 7.5, blur: 3, chromaticAberration: 3, color: "#00D1FF", transparency: 0.1, isLiquid: false })
-
     makeDraggable(document.getElementById("test2"));
-    WebGlass.Glassify(document.getElementById('test2'), { depth: 7.5, blur: 3, chromaticAberration: 3, color: "#FF9D00", transparency: 0.1, isLiquid: true })
-
     makeDraggable(document.getElementById("test3"));
-    WebGlass.Glassify(document.getElementById('test3'), { depth: 7.5, blur: 3, chromaticAberration: 3, color: "#FF9D00", transparency: 0.1, isLiquid: true })
-    // Glass elements configuration
-    // const elementsConfig = [
-    //   { width: 200, height: 200, radius: 50, depth: 7.5, blur: 2, chromaticAberration: 3 },
-    //   { width: 200, height: 200, radius: 100, depth: 7.5, blur: 2, chromaticAberration: 3 },
-    //   { width: 200, height: 200, radius: 20, depth: 7.5, blur: 2, chromaticAberration: 3 }
-    // ];
-    // const overlay = document.getElementById('overlay');
+    makeDraggable(document.getElementById("test4"));
+    makeDraggable(document.getElementById("test5"));
+    makeDraggable(document.getElementById("test6"));
+    function makeDraggable(el) {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let startLeft = 0;
+      let startTop = 0;
 
-    // // Create glass elements using the GlassElement class
-    // elementsConfig.forEach(cfg => {
-    //   const glass = WebGlass.CreateGlass(cfg);
-    //   overlay.appendChild(glass.el);
-    // });
+      el.style.position = "absolute";
+      el.style.cursor = "grab";
+
+      el.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = el.offsetLeft;
+        startTop = el.offsetTop;
+        el.style.cursor = "grabbing";
+        e.preventDefault(); // prevent text selection
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        // Calculate new position relative to document based on mouse movement
+        let newX = startLeft + (e.clientX - startX);
+        let newY = startTop + (e.clientY - startY);
+
+        // Boundaries
+        const maxX = document.documentElement.scrollWidth - el.offsetWidth;
+        const maxY = document.documentElement.scrollHeight - el.offsetHeight;
+
+        newX = Math.max(0, Math.min(maxX, newX));
+        newY = Math.max(0, Math.min(maxY, newY));
+
+        el.style.left = newX + "px";
+        el.style.top = newY + "px";
+      });
+
+      document.addEventListener("mouseup", () => {
+        if (isDragging) {
+          isDragging = false;
+          el.style.cursor = "grab";
+        }
+      });
+    }
   </script>
 </body>
 
