@@ -27,6 +27,7 @@ const WebGlass = {
             depth = presetValues.depth ?? depth;
             chromaticAberration = presetValues.chromaticAberration ?? chromaticAberration;
         }
+
         this.height = height;
         this.width = width;
         this.baseDepth = depth;
@@ -41,6 +42,9 @@ const WebGlass = {
         this.isLiquid = isLiquid
 
         this.el = document.createElement("div");
+        this.el.style.height = this.height
+        this.el.style.width = this.width
+        this.el.style.borderRadius = this.radius
         this.applyBaseStyles(this.el, false, color, transparency);
         this.updateStyle();
 
@@ -52,7 +56,7 @@ const WebGlass = {
             this.clicked = false;
             this.updateStyle();
         });
-        return this;
+        return this.el;
     },
 
     // --- Makes existing "divs" glassy ---
@@ -97,7 +101,7 @@ const WebGlass = {
         this.applyBaseStyles(existingEl, true, color, transparency);
         this.updateStyle();
 
-        return this;
+        return this.el;
     },
 
     // --- Styles "divs" in a glass compatible way ---

@@ -1,6 +1,10 @@
 # WebGlass
 WebGlass is a simple yet powerful tool allowing the creation of glass-like objects in HTML.
 
+![Example](example.png)
+
+[Demo Webpage]
+
 ## Features
 WebGlass has a large feature set allowing you to customize your glass how you like it.
 
@@ -60,3 +64,19 @@ For Stained Variants a color must be provided with the preset, for example:
 Using a preset will NOT override your configuration!
 
 *: Chromium Only elements will fall back to normal or frosted glass on WebKit and Gecko.
+
+## Usage
+Install WebGlass:
+```
+<script src="https://cdn.jemcats.software/WebGlass/latest/WebGlass.min.js"></script>
+```
+
+Make new pane of glass using ```CreateGlass```:
+```
+document.body.appendChild(WebGlass.CreateGlass({ height:"100px", width:"100px", radius: "10px", Your: "Options"}))
+```
+
+Make existing element into a pane of glass with ```Glassify```:
+```
+WebGlass.Glassify(document.getElementById('div'), { Your:"Options" })
+```
