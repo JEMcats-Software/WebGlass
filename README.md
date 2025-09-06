@@ -80,3 +80,10 @@ Make existing element into a pane of glass with ```Glassify```:
 ```
 WebGlass.Glassify(document.getElementById('div'), { Your:"Options" })
 ```
+
+## Contributing
+Fork the ```dev``` branch.
+
+Make changes.
+
+Open pull request.
