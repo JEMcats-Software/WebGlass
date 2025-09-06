@@ -63,7 +63,7 @@ For Stained Variants a color must be provided with the preset, for example:
 
 Using a preset will NOT override your configuration!
 
-*: Chromium Only elements will fall back to normal or frosted glass on WebKit and Gecko.
+*Chromium Only elements will fall back to normal or frosted glass on WebKit and Gecko.
 
 ## Usage
 Install WebGlass:
