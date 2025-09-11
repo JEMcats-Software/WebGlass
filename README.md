@@ -102,3 +102,6 @@ No closed-source forks or redistributions allowed.
 For questions open a discussion.
 
 For support, reports, or requests open an issue.
+
+## Credits
+- [Medium](https://medium.com/ekino-france/liquid-glass-in-css-and-svg-839985fcb88d)
