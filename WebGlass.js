@@ -114,7 +114,6 @@ const WebGlass = {
             el.style.width = this.width + "px";
             el.style.borderRadius = this.radius + "px";
         }
-        this.el.style.transition = "backdrop-filter 1s cubic-bezier(1, 0, 0, 1)"
     },
 
     // --- Applys glassy filters ---
@@ -136,10 +135,10 @@ const WebGlass = {
         } else {
             if (nonchrome || this.isLiquid == false) {
                 el_style.backdropFilter =
-                    `blur(${this.blur / 2}px) blur(${this.blur}px) brightness(1.1) saturate(1.5)`;
+                    `blur(${this.blur}px) brightness(1.1) saturate(1.5)`;
             } else {
                 el_style.backdropFilter =
-                    `blur(${this.blur / 2}px) url('${WebGlass.getDisplacementFilter({
+                    `url('${WebGlass.getDisplacementFilter({
                         height: this.height,
                         width: this.width,
                         radius: this.radius,

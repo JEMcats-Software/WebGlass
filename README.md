@@ -3,7 +3,7 @@ WebGlass is a simple yet powerful tool allowing the creation of glass-like objec
 
 ![Example](example.png)
 
-[Demo Webpage]
+[Demo Webpage](https://jemcats.software/github_pages/WebGlass/)
 
 ## Features
 WebGlass has a large feature set allowing you to customize your glass how you like it.
