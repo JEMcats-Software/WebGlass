@@ -2,6 +2,8 @@
 Thank you for contributing to our project!
 
 Please refrain from deleting any text from this template, unless specifically instructed to do so.
+
+Checkboxes are filled by doing: [x]
 -->
 
 ## Breaking Change
@@ -31,6 +33,7 @@ If your PR requires multiple options, consider splitting it into multiple PRs to
 <!--
 Provide detailed information that will assist JEMcats-Software in evaluating your PR.
 Please complete any applicable additional details.
+If un-used remove this section.
 -->
 
 - This PR addresses or resolves issue: 
