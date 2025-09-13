@@ -109,6 +109,17 @@
     makeDraggable(document.getElementById("test4"));
     makeDraggable(document.getElementById("test5"));
     makeDraggable(document.getElementById("test6"));
+
+
+    const draggables = [];
+
+    function bringDraggableToFront(el) {
+      const i = draggables.findIndex(e => e.id === el.id);
+      draggables.splice(i, 1);
+      draggables.push(el);
+      draggables.forEach((e, i) => e.style.zIndex = i + 10);
+    }
+
     function makeDraggable(el) {
       let isDragging = false;
       let startX = 0;
@@ -118,9 +129,12 @@
 
       el.style.position = "absolute";
       el.style.cursor = "grab";
+      el.style.zIndex = draggables.length + 10;
+      draggables.push(el);
 
       el.addEventListener("mousedown", (e) => {
         isDragging = true;
+        bringDraggableToFront(el);
         startX = e.clientX;
         startY = e.clientY;
         startLeft = el.offsetLeft;
