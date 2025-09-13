@@ -49,7 +49,23 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$(jq -n --arg tag "$tag" --arg title "$title" --arg description "$description" \
                 '{tag_name: $tag, target_commitish: "main", name: $title, body: $description, draft: false, prerelease: false}')" \
-            https://api.github.com/repos/JEMcats-Software/WebGlass/releases
+            https://api.github.com/repos/JEMcats-Software/WebGlass/releases --output release.json
+
+          upload_url=$(jq -r '.upload_url' release.json | sed "s/{?name,label}//")
+          echo "UPLOAD_URL=$upload_url" >> $GITHUB_ENV
+
+      - name: Upload WebGlass.js to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPLOAD_URL: ${{ env.UPLOAD_URL }}
+          TITLE: ${{ github.event.inputs.title }}
+        run: |
+          upload_url="${UPLOAD_URL}?name=WebGlass-${TITLE}.js"
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @WebGlass.js \
+            "$upload_url"
 
   upload-to-s3:
     runs-on: ubuntu-latest
