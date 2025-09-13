@@ -102,11 +102,11 @@ jobs:
       # Sync contents to S3 bucket while excluding .github folder
       - name: Sync to S3
         run: |
-            aws s3 cp WebGlass.js s3://cdn.jemcats.software/WebGlass/${{ github.event.inputs.tag }}/WebGlass.js
-            aws s3 cp WebGlass.min.js s3://cdn.jemcats.software/WebGlass/${{ github.event.inputs.tag }}/WebGlass.min.js
-            aws s3 cp demo/ s3://jemcats.software/github_pages/WebGlass/ --recursive
+          aws s3 cp WebGlass.js s3://cdn.jemcats.software/WebGlass/${{ github.event.inputs.tag }}/WebGlass.js --content-type "text/javascript"
+          aws s3 cp WebGlass.min.js s3://cdn.jemcats.software/WebGlass/${{ github.event.inputs.tag }}/WebGlass.min.js --content-type "text/javascript"
+          aws s3 cp demo/ s3://jemcats.software/github_pages/WebGlass/ --recursive
 
       - name: Clear and Publish Latest to S3
         run: |
           aws s3 rm s3://cdn.jemcats.software/WebGlass/latest/ --recursive
-          aws s3 cp s3://cdn.jemcats.software/WebGlass/${{ github.event.inputs.tag }}/ s3://cdn.jemcats.software/WebGlass/latest/ --recursive
+          aws s3 cp s3://cdn.jemcats.software/WebGlass/${{ github.event.inputs.tag }}/ s3://cdn.jemcats.software/WebGlass/latest/ --recursive --content-type "text/javascript" --exclude "*" --include "*.js"
