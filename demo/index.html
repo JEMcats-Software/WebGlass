@@ -54,17 +54,90 @@
       line-height: 1.6;
     }
   </style>
+  <script>
+    const draggables = [];
+
+    function makeDraggable(el) {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let startLeft = 0;
+      let startTop = 0;
+
+      el.style.position = "absolute";
+      el.style.cursor = "grab";
+      el.style.zIndex = draggables.length + 10;
+      draggables.push(el);
+
+      el.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = el.offsetLeft;
+        startTop = el.offsetTop;
+        el.style.cursor = "grabbing";
+        e.preventDefault(); // prevent text selection
+        // bring element to the front
+        let eIndex = draggables.length;
+        let i = 0;
+        for (let i = 0; i < draggables.length; i++) {
+          if (draggables[i].id === el.id) {
+            eIndex = i; // index of the current element
+          } else if (i > eIndex) {
+            // move back one level
+            draggables[i - 1] = draggables[i];
+            draggables[i].style.zIndex = i + 9;
+          }
+        }
+        // bring to front
+        el.style.zIndex = draggables.length + 9;
+        draggables[draggables.length - 1] = el;
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        // Calculate new position relative to document based on mouse movement
+        let newX = startLeft + (e.clientX - startX);
+        let newY = startTop + (e.clientY - startY);
+
+        // Boundaries
+        const maxX = document.documentElement.scrollWidth - el.offsetWidth;
+        const maxY = document.documentElement.scrollHeight - el.offsetHeight;
+
+        newX = Math.max(0, Math.min(maxX, newX));
+        newY = Math.max(0, Math.min(maxY, newY));
+
+        el.style.left = newX + "px";
+        el.style.top = newY + "px";
+      });
+
+      document.addEventListener("mouseup", () => {
+        if (isDragging) {
+          isDragging = false;
+          el.style.cursor = "grab";
+        }
+      });
+    }
+
+    function makeDraggables() {
+      const elements = document.getElementsByClassName("draggable");
+      Array.from(elements).forEach(makeDraggable);
+    }
+
+    window.addEventListener("load", makeDraggables);
+  </script>
 </head>
 
-<body>
+<body onload="makeDraggables()">
   <!-- <div class="overlay" id="overlay">
   </div> -->
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 25px; z-index: 10; left: 20px; top: 15px;" id="test1"></div>
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 50px; z-index: 11; left: 250px; top: 15px;" id="test2"></div>
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 100px; z-index: 12; left: 480px; top: 15px;" id="test3"></div>
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 25px; z-index: 13; left: 20px; top: 250px;" id="test4"></div>
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 50px; z-index: 14; left: 250px; top: 250px;" id="test5"></div>
-  <div style="position: fixed; width: 200px; height: 200px; border-radius: 100px; z-index: 15; left: 480px; top: 250px;" id="test6"></div>
+  <div id="test1" class="draggable" style="position: fixed; width: 200px; height: 200px; border-radius: 25px; left: 20px; top: 15px;"></div>
+  <div id="test2" class="draggable" style="position: fixed; width: 200px; height: 200px; border-radius: 50px; left: 250px; top: 15px;"></div>
+  <div id="test3" class="draggable" style="position: fixed; width: 200px; height: 200px; border-radius: 100px; left: 480px; top: 15px;"></div>
+  <div id="test4" class="draggable" style="position: fixed; width: 200px; height: 200px; border-radius: 25px; left: 20px; top: 250px;"></div>
+  <div id="test5" class="draggable" style="position: fixed; width: 200px; height: 200px; border-radius: 50px; left: 250px; top: 250px;"></div>
+  <div id="test6" class="draggable" style="position: fixed; width: 200px; height: 200px; border-radius: 100px; left: 480px; top: 250px;"></div>
   <img src="images/AS11-40-5865HR.webp" alt="" />
   <img src="images/AS11-40-5872HR.webp" alt="" />
   <img src="images/AS11-40-5877HR.webp" alt="" />
@@ -101,59 +174,6 @@
     WebGlass.Glassify(document.getElementById('test4'), { preset: "Stained Glass", color: "#009999"})
     WebGlass.Glassify(document.getElementById('test5'), { preset: "Stained Frosted Glass", color: "#ff9900" })
     WebGlass.Glassify(document.getElementById('test6'), { preset: "Stained Liquid Glass", color: "#33cc33" })
-
-
-    makeDraggable(document.getElementById("test1"));
-    makeDraggable(document.getElementById("test2"));
-    makeDraggable(document.getElementById("test3"));
-    makeDraggable(document.getElementById("test4"));
-    makeDraggable(document.getElementById("test5"));
-    makeDraggable(document.getElementById("test6"));
-    function makeDraggable(el) {
-      let isDragging = false;
-      let startX = 0;
-      let startY = 0;
-      let startLeft = 0;
-      let startTop = 0;
-
-      el.style.position = "absolute";
-      el.style.cursor = "grab";
-
-      el.addEventListener("mousedown", (e) => {
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        startLeft = el.offsetLeft;
-        startTop = el.offsetTop;
-        el.style.cursor = "grabbing";
-        e.preventDefault(); // prevent text selection
-      });
-
-      document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-
-        // Calculate new position relative to document based on mouse movement
-        let newX = startLeft + (e.clientX - startX);
-        let newY = startTop + (e.clientY - startY);
-
-        // Boundaries
-        const maxX = document.documentElement.scrollWidth - el.offsetWidth;
-        const maxY = document.documentElement.scrollHeight - el.offsetHeight;
-
-        newX = Math.max(0, Math.min(maxX, newX));
-        newY = Math.max(0, Math.min(maxY, newY));
-
-        el.style.left = newX + "px";
-        el.style.top = newY + "px";
-      });
-
-      document.addEventListener("mouseup", () => {
-        if (isDragging) {
-          isDragging = false;
-          el.style.cursor = "grab";
-        }
-      });
-    }
   </script>
 </body>
 

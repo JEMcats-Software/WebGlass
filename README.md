@@ -86,7 +86,7 @@ Fork the ```dev``` branch.
 
 Make changes.
 
-Open pull request.
+Open pull request (PLEASE FILL OUT THE QUESTIONS!).
 
 ## License
 This project is licensed under the GPL-3.0 license.
