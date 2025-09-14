@@ -23,7 +23,7 @@ Classify the nature of your PR change.
 Please select only one option!
 If your PR requires multiple options, consider splitting it into multiple PRs to facilitate a more efficient and expedited code review process.
 -->
-
+- [ ] Demo Functionality (code that only affects the demo HTML page)
 - [ ] Bugfix (non-breaking change that resolves an issue)
 - [ ] New Feature (which introduces functionality to an existing function)
 - [ ] New Function (a new way to do something, for example make a pane of glass)
