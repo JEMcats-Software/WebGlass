@@ -108,7 +108,6 @@ const WebGlass = {
     applyBaseStyles: function (el, pre, color, transparency) {
         this.el.style.background = WebGlass.buildRgba(color, transparency);
         el.style.boxShadow = "inset 0 0 4px 0px white";
-        el.style.cursor = "pointer";
         if (!pre) {
             el.style.height = this.height + "px";
             el.style.width = this.width + "px";
